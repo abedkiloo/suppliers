@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Orders;
+use App\OrdersDetails;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class OrdersController extends Controller
+class OrderDetailsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,12 +18,12 @@ class OrdersController extends Controller
     public function index()
     {
         try {
-            $orders = Orders::paginate(10);
+            $order_details = OrdersDetails::with(['product', 'order'])->paginate(10);
         } catch (QueryException $exception) {
             return response()->json("server error" . $exception->getMessage(), 500);
         }
-        return api_response(true, null, 0, 'success', 'Successfully Retrieved orders', $orders);
-
+        return api_response(true, null, 0, 'success',
+            'Successfully Retrieved order details', $order_details);
     }
 
     /**
@@ -46,18 +46,24 @@ class OrdersController extends Controller
     {
         $validator = Validator::make($request->all(),
             [
-                'order_number' => 'required',
+                'order_id' => 'required|exists:orders,id',
+                'product_id' => 'required|exists:products,id'
             ]);
         if ($validator->fails()) {
             return api_response(false, $validator->errors(), 1, 'failed',
                 "Some entries are missing", null);
         } else {
-            $orders = new Orders();
-            $orders->order_number = $request->order_number;
-            $orders->created_at = Carbon::now();
-            $orders->save();
+            try {
+                $suppliers = new OrdersDetails();
+                $suppliers->order_id = $request->order_id;
+                $suppliers->product_id = $request->product_id;
+                $suppliers->created_at = Carbon::now();
+                $suppliers->save();
+            } catch (QueryException $queryException) {
+                return response()->json("server error", 500);
+            }
             return api_response(true, null, 0, 'success',
-                "successfully inserted an new order", $orders);
+                "successfully inserted an new supplier suppliers of products", $suppliers);
         }
     }
 
@@ -92,17 +98,7 @@ class OrdersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            $order_update = Orders::find($id);
-            $order_update->name = $request->name;
-            $order_update->description = $request->description;
-            $order_update->quantity = $request->quantity;
-            $order_update->updated_at = Carbon::now();
-        } catch (QueryException $exception) {
-            return response()->json("server error", 500);
-        }
-        return api_response(true, null, 0, 'success',
-            "successfully update orders", $order_update);
+        //
     }
 
     /**
@@ -113,13 +109,6 @@ class OrdersController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $order_delete = Orders::find($id);
-            $order_delete->delete();
-        } catch (QueryException $exception) {
-            return response()->json("server error", 500);
-        }
-        return api_response(true, null, 0, 'success',
-            "successfully update orders", $order_delete);
+        //
     }
 }

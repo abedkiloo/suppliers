@@ -5,8 +5,12 @@ import SupplierCreateComponent from './components/Suppliers/SuppliersCreateCompo
 import SupplierComponent from './components/Suppliers/SuppliersComponent'
 
 
+import OrdersCreateComponent from './components/Orders/OrdersCreateComponent'
+import OrderComponent from './components/Orders/OrdersComponent'
+
+
+import ProductSupplierComponent from './components/ProductSuppliers/ProductsSuppliersComponent'
 import ProductSupplierCreateComponent from './components/ProductSuppliers/ProductsSuppliersCreateComponent'
-import ProductSupplierComponent from './components/ProductSuppliers/ProductsSuppliersComponent.vue'
 
 
 const routes = [
@@ -16,6 +20,10 @@ const routes = [
 
     {path: '/suppliers', component: SupplierComponent},
     {path: '/suppliers-create', component: SupplierCreateComponent},
+
+
+    {path: '/orders', component: OrderComponent},
+    {path: '/orders-create', component: OrdersCreateComponent},
 
 
     {path: '/product-suppliers', component: ProductSupplierComponent},

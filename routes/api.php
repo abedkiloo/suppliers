@@ -23,11 +23,15 @@ Route::apiResources(['products' => "ProductsController"]);
 /**
  * orders end points
  */
-Route::apiResources(['orders' => "ProductsController"]);/**
- * orders end points
+Route::apiResources(['orders' => "OrdersController"]);/**
+ * suppliers end points
  */
 Route::apiResources(['suppliers' => "SupplierController"]);
  /**
-  * orders end points
+  * supplier-products end points
  */
 Route::apiResources(['supplier-products' => "SupplierProductsController"]);
+ /**
+  * orders end points
+ */
+Route::apiResources(['order-details' => "OrderDetailsController"]);

@@ -25,6 +25,11 @@ const store = new Vuex.Store({
         product_supplier_created_status: [],
 
 
+        all_orders: [],
+        order_details: [],
+        order_created_status: [],
+
+
         user_token: [],
         authenticate_token_status: [],
 
@@ -41,6 +46,16 @@ const store = new Vuex.Store({
             return state.product_details = payload;
         }, SET_PRODUCTS_CREATE_RESPONSE: (state, payload) => {
             return state.product_created_status = payload
+        },
+        /*----------------------
+          ------orders -------
+        /*---------------------*/
+        SET_ALL_ORDERS: (state, payload) => {
+            return state.all_orders = payload;
+        }, SET_ORDER_DETAILS: (state, payload) => {
+            return state.order_details = payload;
+        }, SET_ORDERS_CREATE_RESPONSE: (state, payload) => {
+            return state.order_created_status = payload
         },
         /*----------------------
           ------suppliers -------
@@ -68,7 +83,7 @@ const store = new Vuex.Store({
             axios.post(baseURL + '/products/', payload).then(response => {
                 context.commit("SET_ALL_PRODUCTS", response.data);
                 console.log(response.data);
-                if (response.status == 200) {
+                if (response.data.status_code == 0) {
                     context.commit("SET_PRODUCTS_CREATE_RESPONSE", 1);
                     toast.fire({
                         type: 'success',
@@ -153,11 +168,57 @@ const store = new Vuex.Store({
             return response_data
         },
 
+
+        save_orders: (context, payload) => {
+            axios.post(baseURL + '/orders/', payload).then(response => {
+                context.commit("SET_ALL_ORDERS", response.data);
+                console.log(response.data);
+                if (response.data.status_code == 0) {
+                    context.commit("SET_ORDERS_CREATE_RESPONSE", 1);
+                    toast.fire({
+                        type: 'success',
+                        title: 'Order Created successfully'
+                    })
+                } else {
+                    context.commit("SET_ORDERS_CREATE_RESPONSE", 0);
+                    toast.fire({
+                        type: 'error',
+                        title: 'Orders Not Created Please Try again '+ response.data.message
+                    })
+                }
+                return response;
+
+            })
+        },
+
+        get_orders: (context) => {
+            let response_data = {};
+            axios.get(baseURL + '/orders', config).then(response => {
+                context.commit("SET_ALL_ORDERS", response.data.data.data);
+                response_data = response.data.data.data
+            }).catch(error => {
+                return error;
+            })
+            return response_data
+        },
+        get_order_details: (context, payload) => {
+            let response_data = {};
+            axios.get(baseURL + '/orders/' + payload, config).then(response => {
+                context.commit("SET_ORDER_DETAILS", response.data);
+                response_data = response.data
+
+            }).catch(error => {
+                return error;
+            })
+            return response_data
+        },
+
+
         save_product_suppliers: (context, payload) => {
             axios.post(baseURL + '/supplier-products/', payload).then(response => {
                 context.commit("SET_ALL_PRODUCT_SUPPLIERS", response.data);
                 console.log(response.data);
-                if (response.status == 200) {
+                if (response.data.status_code == 0) {
                     context.commit("SET_PRODUCT_SUPPLIER_CREATE_RESPONSE", 1);
                     toast.fire({
                         type: 'success',
@@ -238,6 +299,10 @@ const store = new Vuex.Store({
           ------products -------
         /*---------------------*/
         ALL_PRODUCTS: state => state.all_products,
+        /*----------------------
+               ------orders -------
+             /*---------------------*/
+        ALL_ORDERS: state => state.all_orders,
 
         /*----------------------
           ------suppliers -------
