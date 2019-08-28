@@ -12,12 +12,15 @@
                                     <th>Product Name</th>
                                     <th>Product Description</th>
                                     <th>Product Quantity</th>
+                                    <th>Product Creation Date</th>
                                 </tr>
 
                                 <tr v-for="all_product in all_products">
                                     <td>{{all_product.name}}</td>
                                     <td>{{all_product.description}}</td>
                                     <td>{{all_product.quantity}}</td>
+                                    <td>{{all_product.created_at | custom_date}}</td>
+
                                 </tr>
 
                             </table>

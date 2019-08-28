@@ -11,6 +11,7 @@ import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import store from './store/store'
 import routes from './routes'
+import moment from "moment";
 import {AlertError, Form, HasError} from 'vform'
 import swal from 'sweetalert2'
 import Raphael from 'raphael/raphael'

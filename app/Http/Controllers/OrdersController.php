@@ -20,7 +20,7 @@ class OrdersController extends Controller
         try {
             $orders = Orders::paginate(10);
         } catch (QueryException $exception) {
-            return response()->json("server error".$exception->getMessage(), 500);
+            return response()->json("server error" . $exception->getMessage(), 500);
         }
         return api_response(true, null, 0, 'success', 'Successfully Retrieved orders', $orders);
 
@@ -39,7 +39,7 @@ class OrdersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -51,7 +51,8 @@ class OrdersController extends Controller
                 'quantity' => 'required'
             ]);
         if ($validator->fails()) {
-
+            return api_response(false, $validator->errors(), 1, 'failed',
+                "Some entries are missing", null);
         } else {
             $orders = new Orders();
             $orders->name = $request->name;
@@ -67,7 +68,7 @@ class OrdersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -78,7 +79,7 @@ class OrdersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -89,8 +90,8 @@ class OrdersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -111,7 +112,7 @@ class OrdersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -123,6 +124,6 @@ class OrdersController extends Controller
             return response()->json("server error", 500);
         }
         return api_response(true, null, 0, 'success',
-            "successfully update orders",    $order_delete);
+            "successfully update orders", $order_delete);
     }
 }

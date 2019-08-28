@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Suppliers;
+use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SupplierController extends Controller
 {
@@ -18,7 +20,7 @@ class SupplierController extends Controller
         try {
             $suppliers = Suppliers::paginate(10);
         } catch (QueryException $exception) {
-            return response()->json("server error".$exception->getMessage(), 500);
+            return response()->json("server error" . $exception->getMessage(), 500);
         }
         return api_response(true, null, 0, 'success', 'Successfully Retrieved suppliers', $suppliers);
 
@@ -37,7 +39,7 @@ class SupplierController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -45,16 +47,14 @@ class SupplierController extends Controller
         $validator = Validator::make($request->all(),
             [
                 'name' => 'required',
-                'description' => 'required',
-                'quantity' => 'required'
+
             ]);
         if ($validator->fails()) {
-
+            return api_response(false, $validator->errors(), 1, 'failed',
+                "Some entries are missing", null);
         } else {
             $suppliers = new Suppliers();
             $suppliers->name = $request->name;
-            $suppliers->description = $request->description;
-            $suppliers->quantity = $request->quantity;
             $suppliers->created_at = Carbon::now();
             $suppliers->save();
             return api_response(true, null, 0, 'success',
@@ -66,7 +66,7 @@ class SupplierController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -77,7 +77,7 @@ class SupplierController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -88,8 +88,8 @@ class SupplierController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -100,7 +100,7 @@ class SupplierController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

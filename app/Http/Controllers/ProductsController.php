@@ -50,7 +50,8 @@ class ProductsController extends Controller
                 'quantity' => 'required'
             ]);
         if ($validator->fails()) {
-
+            return api_response(false, $validator->errors(), 1, 'failed',
+                "Some entries are missing", null);
         } else {
             $products = new Products();
             $products->name = $request->name;
