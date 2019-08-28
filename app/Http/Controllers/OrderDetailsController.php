@@ -75,7 +75,13 @@ class OrderDetailsController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $order_details = OrdersDetails::with(['product', 'order'])->find($id);
+        } catch (QueryException $exception) {
+            return response()->json("server error" . $exception->getMessage(), 500);
+        }
+        return api_response(true, null, 0, 'success',
+            'Successfully Retrieved order details', $order_details);
     }
 
     /**

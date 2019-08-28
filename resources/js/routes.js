@@ -10,6 +10,7 @@ import OrderComponent from './components/Orders/OrdersComponent'
 
 
 import OrdersDetailsCreateComponent from './components/OrderDetails/OrderDetailsCreateComponent'
+import OrderDetailsViewComponent from './components/OrderDetails/OrderDetailsViewComponent'
 import OrderDetailsComponent from './components/OrderDetails/OrderDetailsComponent'
 
 
@@ -31,6 +32,7 @@ const routes = [
 
 
     {path: '/orders-details', component: OrderDetailsComponent},
+    {path: '/orders-details/:id', name: 'orders-details-view', component: OrderDetailsViewComponent, props: true},
     {path: '/orders-details-create', component: OrdersDetailsCreateComponent},
 
 

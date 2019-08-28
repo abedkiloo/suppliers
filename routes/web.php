@@ -20,3 +20,5 @@ Route::get('/', function () {
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/{path}', 'HomeController@index')->name('path','([A-z\d-\/_.]+)?');
+
+Route::get('{any}', 'HomeController@index')->name('path','([A-z\d-\/_.]+)?')->where('any','.*');;

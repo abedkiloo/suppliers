@@ -264,8 +264,19 @@ const store = new Vuex.Store({
         get_order_details_details: (context, payload) => {
             let response_data = {};
             axios.get(baseURL + '/order-details/' + payload, config).then(response => {
-                context.commit("SET_ORDER_DETAILS", response.data);
-                response_data = response.data
+                if (response.data.status_code == 0) {
+                    context.commit("SET_ORDER_DETAILS_DETAILS", response.data.data);
+                    toast.fire({
+                        type: 'success',
+                        title: response.data.message
+                    })
+                    response_data = response.data
+                } else {
+                    toast.fire({
+                        type: 'error',
+                        title: response.data.message
+                    })
+                }
 
             }).catch(error => {
                 return error;
@@ -359,6 +370,7 @@ const store = new Vuex.Store({
           ------products -------
         /*---------------------*/
         ALL_PRODUCTS: state => state.all_products,
+        SINGLE_PRODUCT: state => state.product_details,
         /*----------------------
                ------orders -------
              /*---------------------*/
@@ -367,6 +379,7 @@ const store = new Vuex.Store({
                        ------orders -------
                      /*---------------------*/
         ALL_ORDERS_DETAILS: state => state.all_orders_details,
+        SINGLE_ORDER_DETAIL_DETAIL: state => state.order_details_details,
 
         /*----------------------
           ------suppliers -------

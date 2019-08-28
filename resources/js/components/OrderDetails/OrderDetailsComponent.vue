@@ -18,6 +18,9 @@
                                     <td>{{order_details.product.name}}</td>
                                     <td>{{order_details.order.order_number}}</td>
                                     <td>{{order_details.created_at | custom_date}}</td>
+                                    <td>
+                                        <button @click="view_order_detail(order_details.id)" class="btn btn-sm btn-secondary">View Details</button>
+                                    </td>
                                 </tr>
 
                             </table>
@@ -43,7 +46,13 @@
             /**group data**/
             fetch_all_order_details() {
                 this.$store.dispatch("get_orders__details")
-            },
+            }, view_order_detail(payload) {
+
+                this.$router.push({
+                    path: `orders-details/${payload}`,
+                    params: {orders_details: payload}
+                })
+            }
         },
         computed: {
             load_all_order_details() {

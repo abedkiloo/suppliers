@@ -44,21 +44,26 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
+//        $data = request()->validate([
+//            'order_number' => 'required',
+//        ]);
+//        Orders::create($data);
         $validator = Validator::make($request->all(),
             [
                 'order_number' => 'required',
             ]);
-        if ($validator->fails()) {
-            return api_response(false, $validator->errors(), 1, 'failed',
-                "Some entries are missing", null);
-        } else {
-            $orders = new Orders();
-            $orders->order_number = $request->order_number;
-            $orders->created_at = Carbon::now();
-            $orders->save();
-            return api_response(true, null, 0, 'success',
-                "successfully inserted an new order", $orders);
-        }
+//
+//        if ($validator->fails()) {
+//            return api_response(false, $validator->errors(), 1, 'failed',
+//                "Some entries are missing", null);
+//        } else {
+//            $orders = new Orders();
+//            $orders->order_number = $request->order_number;
+//            $orders->created_at = Carbon::now();
+//            $orders->save();
+//            return api_response(true, null, 0, 'success',
+//                "successfully inserted an new order", $orders);
+//        }
     }
 
     /**
