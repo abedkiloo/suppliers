@@ -40,10 +40,10 @@
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            this.fetch_all_products()
         },
         methods: {
-            /**group data**/
+            /**products data**/
             fetch_all_products() {
                 this.$store.dispatch("get_products")
             },

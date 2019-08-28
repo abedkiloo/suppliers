@@ -20,6 +20,11 @@ const store = new Vuex.Store({
         supplier_created_status: [],
 
 
+        all_product_supplier: [],
+        product_supplier_details: [],
+        product_supplier_created_status: [],
+
+
         user_token: [],
         authenticate_token_status: [],
 
@@ -46,6 +51,16 @@ const store = new Vuex.Store({
             return state.suppliers_details = payload;
         }, SET_SUPPLIER_CREATE_RESPONSE: (state, payload) => {
             return state.supplier_created_status = payload
+        },
+        /*----------------------
+          ------product suppliers -------
+        /*---------------------*/
+        SET_ALL_PRODUCT_SUPPLIERS: (state, payload) => {
+            return state.all_product_supplier = payload;
+        }, SET_PRODUCT_SUPPLIERS_DETAILS: (state, payload) => {
+            return state.product_supplier_details = payload;
+        }, SET_PRODUCT_SUPPLIER_CREATE_RESPONSE: (state, payload) => {
+            return state.product_created_status = payload
         }
     },
     actions: {
@@ -137,6 +152,50 @@ const store = new Vuex.Store({
             })
             return response_data
         },
+
+        save_product_suppliers: (context, payload) => {
+            axios.post(baseURL + '/supplier-products/', payload).then(response => {
+                context.commit("SET_ALL_PRODUCT_SUPPLIERS", response.data);
+                console.log(response.data);
+                if (response.status == 200) {
+                    context.commit("SET_PRODUCT_SUPPLIER_CREATE_RESPONSE", 1);
+                    toast.fire({
+                        type: 'success',
+                        title: 'Suppliers Created successfully'
+                    })
+                } else {
+                    context.commit("SET_PRODUCT_SUPPLIERS_CREATE_RESPONSE", 0);
+                    toast.fire({
+                        type: 'error',
+                        title: 'Suppliers Not Created Please Try again '
+                    })
+                }
+                return response;
+
+            })
+        },
+
+        get_product_suppliers: (context) => {
+            let response_data = {};
+            axios.get(baseURL + '/supplier-products', config).then(response => {
+                context.commit("SET_ALL_PRODUCT_SUPPLIERS", response.data.data.data);
+                response_data = response.data.data.data
+            }).catch(error => {
+                return error;
+            })
+            return response_data
+        },
+        get_product_suppliers_details: (context, payload) => {
+            let response_data = {};
+            axios.get(baseURL + '/supplier-products/' + payload, config).then(response => {
+                context.commit("SET_PRODUCT_SUPPLIER_DETAILS", response.data);
+                response_data = response.data
+
+            }).catch(error => {
+                return error;
+            })
+            return response_data
+        },
         /**
          * user login
          */
@@ -184,6 +243,10 @@ const store = new Vuex.Store({
           ------suppliers -------
         /*---------------------*/
         ALL_SUPPLIERS: state => state.all_suppliers,
+        /*----------------------
+          ------suppliers -------
+        /*---------------------*/
+        ALL_PRODUCT_SUPPLIERS: state => state.all_product_supplier,
 
         /**
          * authentication

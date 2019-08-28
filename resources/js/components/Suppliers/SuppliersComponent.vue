@@ -35,7 +35,7 @@
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            this.fetch_all_suppliers()
         },
         methods: {
             /**group data**/

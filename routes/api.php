@@ -27,3 +27,7 @@ Route::apiResources(['orders' => "ProductsController"]);/**
  * orders end points
  */
 Route::apiResources(['suppliers' => "SupplierController"]);
+ /**
+  * orders end points
+ */
+Route::apiResources(['supplier-products' => "SupplierProductsController"]);
