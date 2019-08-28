@@ -19,7 +19,7 @@ class CreateOrdersDetailsTable extends Migration
             $table->foreign('order_id')->references('id')->on('orders');
             $table->bigInteger('product_id')->unsigned()->index();
             $table->foreign('product_id')->references('id')->on('products');
-            $table->dateTime("deleted_at");
+            $table->dateTime("deleted_at")->nullable();
             $table->timestamps();
         });
     }

@@ -19,7 +19,7 @@ class CreateSuppliersProductsTable extends Migration
             $table->foreign('supply_id')->references('id')->on('suppliers');
             $table->bigInteger('product_id')->unsigned()->index();
             $table->foreign('product_id')->references('id')->on('products');
-            $table->dateTime("deleted_at");
+            $table->dateTime("deleted_at")->nullable();
             $table->timestamps();
         });
     }

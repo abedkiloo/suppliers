@@ -16,7 +16,7 @@ class CreateSuppliersTable extends Migration
         Schema::create('suppliers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->dateTime("deleted_at");
+            $table->dateTime("deleted_at")->nullable();
             $table->timestamps();
         });
     }
