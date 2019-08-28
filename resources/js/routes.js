@@ -9,6 +9,10 @@ import OrdersCreateComponent from './components/Orders/OrdersCreateComponent'
 import OrderComponent from './components/Orders/OrdersComponent'
 
 
+import OrdersDetailsCreateComponent from './components/OrderDetails/OrderDetailsCreateComponent'
+import OrderDetailsComponent from './components/OrderDetails/OrderDetailsComponent'
+
+
 import ProductSupplierComponent from './components/ProductSuppliers/ProductsSuppliersComponent'
 import ProductSupplierCreateComponent from './components/ProductSuppliers/ProductsSuppliersCreateComponent'
 
@@ -24,6 +28,10 @@ const routes = [
 
     {path: '/orders', component: OrderComponent},
     {path: '/orders-create', component: OrdersCreateComponent},
+
+
+    {path: '/orders-details', component: OrderDetailsComponent},
+    {path: '/orders-details-create', component: OrdersDetailsCreateComponent},
 
 
     {path: '/product-suppliers', component: ProductSupplierComponent},

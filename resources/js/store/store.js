@@ -30,6 +30,11 @@ const store = new Vuex.Store({
         order_created_status: [],
 
 
+        all_orders_details: [],
+        order_details_details: [],
+        order_details_created_status: [],
+
+
         user_token: [],
         authenticate_token_status: [],
 
@@ -56,6 +61,16 @@ const store = new Vuex.Store({
             return state.order_details = payload;
         }, SET_ORDERS_CREATE_RESPONSE: (state, payload) => {
             return state.order_created_status = payload
+        },
+        /*----------------------
+          ------orders -------
+        /*---------------------*/
+        SET_ALL_ORDERS_DETAILS: (state, payload) => {
+            return state.all_orders_details = payload;
+        }, SET_ORDER_DETAILS_DETAILS: (state, payload) => {
+            return state.order_details_details = payload;
+        }, SET_ORDERS_DETAILS_CREATE_RESPONSE: (state, payload) => {
+            return state.order_details_created_status = payload
         },
         /*----------------------
           ------suppliers -------
@@ -183,7 +198,7 @@ const store = new Vuex.Store({
                     context.commit("SET_ORDERS_CREATE_RESPONSE", 0);
                     toast.fire({
                         type: 'error',
-                        title: 'Orders Not Created Please Try again '+ response.data.message
+                        title: 'Orders Not Created Please Try again ' + response.data.message
                     })
                 }
                 return response;
@@ -204,6 +219,51 @@ const store = new Vuex.Store({
         get_order_details: (context, payload) => {
             let response_data = {};
             axios.get(baseURL + '/orders/' + payload, config).then(response => {
+                context.commit("SET_ORDER_DETAILS", response.data);
+                response_data = response.data
+
+            }).catch(error => {
+                return error;
+            })
+            return response_data
+        },
+
+
+        save_orders_details: (context, payload) => {
+            axios.post(baseURL + '/order-details/', payload).then(response => {
+                context.commit("SET_ALL_ORDERS_DETAILS", response.data);
+                console.log(response.data);
+                if (response.data.status_code == 0) {
+                    context.commit("SET_ORDERS_DETAILS_CREATE_RESPONSE", 1);
+                    toast.fire({
+                        type: 'success',
+                        title: 'Order Details Created successfully'
+                    })
+                } else {
+                    context.commit("SET_ORDERS_DETAILS_CREATE_RESPONSE", 0);
+                    toast.fire({
+                        type: 'error',
+                        title: 'Orders Details Not Created Please Try again ' + response.data.message
+                    })
+                }
+                return response;
+
+            })
+        },
+
+        get_orders__details: (context) => {
+            let response_data = {};
+            axios.get(baseURL + '/order-details', config).then(response => {
+                context.commit("SET_ALL_ORDERS_DETAILS", response.data.data.data);
+                response_data = response.data.data.data
+            }).catch(error => {
+                return error;
+            })
+            return response_data
+        },
+        get_order_details_details: (context, payload) => {
+            let response_data = {};
+            axios.get(baseURL + '/order-details/' + payload, config).then(response => {
                 context.commit("SET_ORDER_DETAILS", response.data);
                 response_data = response.data
 
@@ -303,6 +363,10 @@ const store = new Vuex.Store({
                ------orders -------
              /*---------------------*/
         ALL_ORDERS: state => state.all_orders,
+        /*----------------------
+                       ------orders -------
+                     /*---------------------*/
+        ALL_ORDERS_DETAILS: state => state.all_orders_details,
 
         /*----------------------
           ------suppliers -------
