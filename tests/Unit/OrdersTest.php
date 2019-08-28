@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Orders;
 use Carbon\Carbon;
 use Tests\TestCase;
 
@@ -36,23 +37,22 @@ class OrdersTest extends TestCase
         $response->assertSessionHasErrors('order_number');
     }
 
-    /**
-     * @test
-     */
-    public function check_can_create_order_details()
-    {
+
+    public function an_order_can_update(){
         $this->withExceptionHandling();
 
         $data = [
-            'name' => "abed",
-            'description' => "describe",
-            'quantity' => 100,
-            'updated_at' => Carbon::now()
+            'order_number' => "EW-3443-2019",
         ];
-
-
-        $this->post('api/order-details', $data)
+        $this->patch('api/orders', $data)
             ->assertOk()
             ->assertStatus(200);
+        $data = [
+            'order_number' => "EW-443-2019",
+        ];
+
+        $this->patch('api/orders', $data)
+            ->assertOk()
+            ->assertEquals('EW-443-2019',Orders::first()->order_number);
     }
 }
