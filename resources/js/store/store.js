@@ -11,6 +11,9 @@ let config = {
 const store = new Vuex.Store({
     state: {
         all_products: [],
+        product_details: [],
+        product_created_status: [],
+
 
         user_token: [],
         authenticate_token_status: [],
@@ -23,11 +26,12 @@ const store = new Vuex.Store({
           ------products -------
         /*---------------------*/
         SET_ALL_PRODUCTS: (state, payload) => {
-            return state.all_groups = payload;
+            return state.all_products = payload;
         }, SET_PRODUCT_DETAILS: (state, payload) => {
-            return state.group_details = payload;
-
-        },
+            return state.product_details = payload;
+        }, SET_PRODUCTS_CREATE_RESPONSE: (state, payload) => {
+            return state.group_created_status = payload
+        }
     },
     actions: {
         save_products: (context, payload) => {
@@ -56,8 +60,8 @@ const store = new Vuex.Store({
         get_products: (context) => {
             let response_data = {};
             axios.get(baseURL + '/products', config).then(response => {
-                context.commit("SET_ALL_PRODUCTS", response.data);
-                response_data = response.data
+                context.commit("SET_ALL_PRODUCTS", response.data.data.data);
+                response_data = response.data.data.data
             }).catch(error => {
                 return error;
             })

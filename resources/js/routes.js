@@ -1,5 +1,5 @@
-import ProductsCreateComponent from './components/ProductsCreateComponent'
-import ProductsComponent from './components/ProductsComponent'
+import ProductsCreateComponent from './components/Products/ProductsCreateComponent'
+import ProductsComponent from './components/Products/ProductsComponent'
 
 
 const routes = [
