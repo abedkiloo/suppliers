@@ -4,8 +4,10 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">
-                        <div class="card-header">Suppliers Component</div>
-
+                        <div class="card-header">Product Suppliers Component</div>
+                        <div class="col-sm-12">
+                            <router-link class="btn btn-primary float-right" v-bind:to="'/product-suppliers-create'">Create Product Suppliers</router-link>
+                        </div>
                         <div class="card-body">
                             <table class="table table-bordered  table">
                                 <tr>

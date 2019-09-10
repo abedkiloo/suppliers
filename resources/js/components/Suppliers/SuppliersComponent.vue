@@ -5,7 +5,9 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header">Users Component</div>
-
+                        <div class="col-sm-12">
+                            <router-link class="btn btn-primary float-right" v-bind:to="'/suppliers-create'">Create Supplier</router-link>
+                        </div>
                         <div class="card-body">
                             <table class="table table-bordered  table">
                                 <tr>

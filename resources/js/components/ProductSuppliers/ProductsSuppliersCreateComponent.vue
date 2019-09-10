@@ -1,26 +1,30 @@
 <template id="add-post">
     <div class="container" style="padding:10em">
-        <h2>Add new Products supplier</h2>
+
+            <h2 class="text-center">Add new Products supplier</h2>
+        <div class="row justify-content-center">
+
         <form v-on:submit.prevent="createPost">
-            <div class="form-group">
-                <label for="add-name">Name</label>
-                <input class="form-control" id="add-name" v-model="form.name" required/>
-            </div>
-            <div class="form-group">
-                <label for="add-supplier">Supplier</label>
-                <select class="form-control" id="add-supplier" v-model="form.supply_id" required>
-                    <option v-for="supplier in all_suppliers" :value="supplier.id">{{supplier.name}}</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="add-product">Product</label>
-                <select class="form-control" id="add-product" v-model="form.product_id" required>
-                    <option v-for="product in all_products" :value="product.id">{{product.name}}</option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Create</button>
-            <router-link class="btn btn-default" v-bind:to="'/'">Cancel</router-link>
-        </form>
+                <div class="form-group">
+                    <label for="add-name">Name</label>
+                    <input class="form-control" id="add-name" v-model="form.name" required/>
+                </div>
+                <div class="form-group">
+                    <label for="add-supplier">Supplier</label>
+                    <select class="form-control" id="add-supplier" v-model="form.supply_id" required>
+                        <option v-for="supplier in all_suppliers" :value="supplier.id">{{supplier.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="add-product">Product</label>
+                    <select class="form-control" id="add-product" v-model="form.product_id" required>
+                        <option v-for="product in all_products" :value="product.id">{{product.name}}</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Create</button>
+                <router-link class="btn btn-default" v-bind:to="'/'">Cancel</router-link>
+            </form>
+        </div>
     </div>
 </template>
 

@@ -1,6 +1,9 @@
 <template id="add-post">
     <div class="container" style="padding:10em">
-        <h2>Add new Supplier</h2>
+
+        <h2 class="text-center">Add new Supplier</h2>
+        <div class="row justify-content-center">
+
         <form v-on:submit.prevent="createPost">
             <div class="form-group">
                 <label for="add-name">Name</label>
@@ -8,7 +11,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Create</button>
             <router-link class="btn btn-default" v-bind:to="'/'">Cancel</router-link>
-        </form>
+        </form></div>
     </div>
 </template>
 
