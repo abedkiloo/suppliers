@@ -6,7 +6,13 @@
                     <div class="card">
                         <div class="card-header">Products Component</div>
                         <div class="col-sm-12">
-                            <router-link class="btn btn-primary float-right" v-bind:to="'/products-create'">Create Product </router-link>
+                            <router-link class="btn btn-primary float-right" v-bind:to="'/products-create'">Create
+                                Product
+                            </router-link>
+                        </div>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" v-model="search_key"
+                                   placeholder="search product">
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered  table">
@@ -17,7 +23,7 @@
                                     <th>Product Creation Date</th>
                                 </tr>
 
-                                <tr v-for="all_product in all_products">
+                                <tr v-for="all_product in searched_products">
                                     <td>{{all_product.name}}</td>
                                     <td>{{all_product.description}}</td>
                                     <td>{{all_product.quantity}}</td>
@@ -39,6 +45,7 @@
         data() {
             return {
                 all_products: [],
+                search_key: ""
             }
         },
         mounted() {
@@ -55,6 +62,10 @@
                 let _products = this.$store.getters.ALL_PRODUCTS;
                 this.all_products = _products;
                 return _products;
+            }, searched_products: function () {
+                return this.all_products.filter((products) => {
+                    return products.name.match(this.search_key);
+                })
             }
         }, created() {
             this.fetch_all_products();

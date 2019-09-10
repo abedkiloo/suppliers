@@ -26,9 +26,12 @@
                     <router-link to="/orders">Orders</router-link>
                 </li>
                 <li class="nav-item">
+                    <router-link to="/orders-details">Order Details</router-link>
+                </li>
+                <li class="nav-item">
                     <router-link to="/product-suppliers">Product Suppliers</router-link>
                 </li>
-                </li>
+
             </ul>
         </nav>
         <router-view></router-view>

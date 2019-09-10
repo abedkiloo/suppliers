@@ -6,7 +6,13 @@
                     <div class="card">
                         <div class="card-header">Product Suppliers Component</div>
                         <div class="col-sm-12">
-                            <router-link class="btn btn-primary float-right" v-bind:to="'/product-suppliers-create'">Create Product Suppliers</router-link>
+                            <router-link class="btn btn-primary float-right" v-bind:to="'/product-suppliers-create'">
+                                Create Product Suppliers
+                            </router-link>
+                        </div>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" v-model="search_key"
+                                   placeholder="search Product Suppliers">
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered  table">
@@ -16,7 +22,7 @@
                                     <th> Creation Date</th>
                                 </tr>
 
-                                <tr v-for="products_supplier in all_products_supplier">
+                                <tr v-for="products_supplier in searched_products_supplier">
                                     <td>{{products_supplier.product.name}}</td>
                                     <td>{{products_supplier.supplier.name}}</td>
                                     <td>{{products_supplier.created_at | custom_date}}</td>
@@ -36,6 +42,7 @@
         data() {
             return {
                 all_products_supplier: [],
+                search_key: ""
             }
         },
         mounted() {
@@ -52,6 +59,10 @@
                 let _products_supplier = this.$store.getters.ALL_PRODUCT_SUPPLIERS;
                 this.all_products_supplier = _products_supplier;
                 return _products_supplier;
+            }, searched_products_supplier: function () {
+                return this.all_products_supplier.filter((products_supplier) => {
+                    return products_supplier.product.name.match(this.search_key);
+                })
             }
         }, created() {
             this.fetch_all_products_supplier();

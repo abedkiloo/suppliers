@@ -4,9 +4,15 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">
-                        <div class="card-header">Users Component</div>
+                        <div class="card-header">Suppliers Component</div>
                         <div class="col-sm-12">
-                            <router-link class="btn btn-primary float-right" v-bind:to="'/suppliers-create'">Create Supplier</router-link>
+                            <router-link class="btn btn-primary float-right" v-bind:to="'/suppliers-create'">Create
+                                Supplier
+                            </router-link>
+                        </div>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" v-model="search_key"
+                                   placeholder="search suppliers">
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered  table">
@@ -15,7 +21,7 @@
                                     <th>Supplier Creation Date</th>
                                 </tr>
 
-                                <tr v-for="all_supplier in all_suppliers">
+                                <tr v-for="all_supplier in searched_suppliers">
                                     <td>{{all_supplier.name}}</td>
                                     <td>{{all_supplier.created_at | custom_date}}</td>
                                 </tr>
@@ -34,6 +40,7 @@
         data() {
             return {
                 all_suppliers: [],
+                search_key: ""
             }
         },
         mounted() {
@@ -50,6 +57,10 @@
                 let _suppliers = this.$store.getters.ALL_SUPPLIERS;
                 this.all_suppliers = _suppliers;
                 return _suppliers;
+            }, searched_suppliers: function () {
+                return this.all_suppliers.filter((suppliers) => {
+                    return suppliers.name.match(this.search_key);
+                })
             }
         }, created() {
             this.fetch_all_suppliers();

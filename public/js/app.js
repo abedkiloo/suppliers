@@ -1733,10 +1733,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      all_order_details: []
+      all_order_details: [],
+      search_key: ""
     };
   },
   mounted: function mounted() {
@@ -1761,6 +1770,13 @@ __webpack_require__.r(__webpack_exports__);
       var _order_details = this.$store.getters.ALL_ORDERS_DETAILS;
       this.all_order_details = _order_details;
       return _order_details;
+    },
+    searched_order_details: function searched_order_details() {
+      var _this = this;
+
+      return this.all_order_details.filter(function (order_details) {
+        return order_details.product.name.match(_this.search_key);
+      });
     }
   },
   created: function created() {
@@ -2046,10 +2062,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      all_orders: []
+      all_orders: [],
+      search_key: ""
     };
   },
   mounted: function mounted() {
@@ -2066,6 +2089,13 @@ __webpack_require__.r(__webpack_exports__);
       var _orders = this.$store.getters.ALL_ORDERS;
       this.all_orders = _orders;
       return _orders;
+    },
+    searched_orders: function searched_orders() {
+      var _this = this;
+
+      return this.all_orders.filter(function (order) {
+        return order.order_number.match(_this.search_key);
+      });
     }
   },
   created: function created() {
@@ -2171,10 +2201,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      all_products_supplier: []
+      all_products_supplier: [],
+      search_key: ""
     };
   },
   mounted: function mounted() {
@@ -2191,6 +2228,13 @@ __webpack_require__.r(__webpack_exports__);
       var _products_supplier = this.$store.getters.ALL_PRODUCT_SUPPLIERS;
       this.all_products_supplier = _products_supplier;
       return _products_supplier;
+    },
+    searched_products_supplier: function searched_products_supplier() {
+      var _this = this;
+
+      return this.all_products_supplier.filter(function (products_supplier) {
+        return products_supplier.product.name.match(_this.search_key);
+      });
     }
   },
   created: function created() {
@@ -2358,10 +2402,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      all_products: []
+      all_products: [],
+      search_key: ""
     };
   },
   mounted: function mounted() {
@@ -2378,6 +2429,13 @@ __webpack_require__.r(__webpack_exports__);
       var _products = this.$store.getters.ALL_PRODUCTS;
       this.all_products = _products;
       return _products;
+    },
+    searched_products: function searched_products() {
+      var _this = this;
+
+      return this.all_products.filter(function (products) {
+        return products.name.match(_this.search_key);
+      });
     }
   },
   created: function created() {
@@ -2492,10 +2550,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      all_suppliers: []
+      all_suppliers: [],
+      search_key: ""
     };
   },
   mounted: function mounted() {
@@ -2512,6 +2577,13 @@ __webpack_require__.r(__webpack_exports__);
       var _suppliers = this.$store.getters.ALL_SUPPLIERS;
       this.all_suppliers = _suppliers;
       return _suppliers;
+    },
+    searched_suppliers: function searched_suppliers() {
+      var _this = this;
+
+      return this.all_suppliers.filter(function (suppliers) {
+        return suppliers.name.match(_this.search_key);
+      });
     }
   },
   created: function created() {
@@ -67863,13 +67935,41 @@ var render = function() {
                   "router-link",
                   {
                     staticClass: "btn btn-primary float-right",
-                    attrs: { to: "/orders-create" }
+                    attrs: { to: "/orders-details-create" }
                   },
-                  [_vm._v("Create Orders ")]
+                  [
+                    _vm._v(
+                      "Create Orders\n                            Details\n                        "
+                    )
+                  ]
                 )
               ],
               1
             ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-sm-6" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search_key,
+                    expression: "search_key"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "search order details" },
+                domProps: { value: _vm.search_key },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search_key = $event.target.value
+                  }
+                }
+              })
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c(
@@ -67878,7 +67978,7 @@ var render = function() {
                 [
                   _vm._m(0),
                   _vm._v(" "),
-                  _vm._l(_vm.all_order_details, function(order_details) {
+                  _vm._l(_vm.searched_order_details, function(order_details) {
                     return _c("tr", [
                       _c("td", [_vm._v(_vm._s(order_details.product.name))]),
                       _vm._v(" "),
@@ -67905,7 +68005,11 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("View Details")]
+                          [
+                            _vm._v(
+                              "View Details\n                                    "
+                            )
+                          ]
                         )
                       ])
                     ])
@@ -68324,11 +68428,39 @@ var render = function() {
                     staticClass: "btn btn-primary float-right",
                     attrs: { to: "/orders-create" }
                   },
-                  [_vm._v("Create Orders ")]
+                  [
+                    _vm._v(
+                      "Create\n                            Orders\n                        "
+                    )
+                  ]
                 )
               ],
               1
             ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-sm-6" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search_key,
+                    expression: "search_key"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "search orders" },
+                domProps: { value: _vm.search_key },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search_key = $event.target.value
+                  }
+                }
+              })
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c(
@@ -68337,7 +68469,7 @@ var render = function() {
                 [
                   _vm._m(0),
                   _vm._v(" "),
-                  _vm._l(_vm.all_orders, function(order) {
+                  _vm._l(_vm.searched_orders, function(order) {
                     return _c("tr", [
                       _c("td", [_vm._v(_vm._s(order.order_number))]),
                       _vm._v(" "),
@@ -68492,11 +68624,42 @@ var render = function() {
                     staticClass: "btn btn-primary float-right",
                     attrs: { to: "/product-suppliers-create" }
                   },
-                  [_vm._v("Create Product Suppliers")]
+                  [
+                    _vm._v(
+                      "\n                            Create Product Suppliers\n                        "
+                    )
+                  ]
                 )
               ],
               1
             ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-sm-6" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search_key,
+                    expression: "search_key"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  placeholder: "search Product Suppliers"
+                },
+                domProps: { value: _vm.search_key },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search_key = $event.target.value
+                  }
+                }
+              })
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c(
@@ -68505,7 +68668,7 @@ var render = function() {
                 [
                   _vm._m(0),
                   _vm._v(" "),
-                  _vm._l(_vm.all_products_supplier, function(
+                  _vm._l(_vm.searched_products_supplier, function(
                     products_supplier
                   ) {
                     return _c("tr", [
@@ -68770,11 +68933,39 @@ var render = function() {
                     staticClass: "btn btn-primary float-right",
                     attrs: { to: "/products-create" }
                   },
-                  [_vm._v("Create Product ")]
+                  [
+                    _vm._v(
+                      "Create\n                            Product\n                        "
+                    )
+                  ]
                 )
               ],
               1
             ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-sm-6" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search_key,
+                    expression: "search_key"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "search product" },
+                domProps: { value: _vm.search_key },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search_key = $event.target.value
+                  }
+                }
+              })
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c(
@@ -68783,7 +68974,7 @@ var render = function() {
                 [
                   _vm._m(0),
                   _vm._v(" "),
-                  _vm._l(_vm.all_products, function(all_product) {
+                  _vm._l(_vm.searched_products, function(all_product) {
                     return _c("tr", [
                       _c("td", [_vm._v(_vm._s(all_product.name))]),
                       _vm._v(" "),
@@ -68989,7 +69180,7 @@ var render = function() {
         _c("div", { staticClass: "col-md-8" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-header" }, [
-              _vm._v("Users Component")
+              _vm._v("Suppliers Component")
             ]),
             _vm._v(" "),
             _c(
@@ -69002,11 +69193,39 @@ var render = function() {
                     staticClass: "btn btn-primary float-right",
                     attrs: { to: "/suppliers-create" }
                   },
-                  [_vm._v("Create Supplier")]
+                  [
+                    _vm._v(
+                      "Create\n                            Supplier\n                        "
+                    )
+                  ]
                 )
               ],
               1
             ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-sm-6" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search_key,
+                    expression: "search_key"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "search suppliers" },
+                domProps: { value: _vm.search_key },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search_key = $event.target.value
+                  }
+                }
+              })
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c(
@@ -69015,7 +69234,7 @@ var render = function() {
                 [
                   _vm._m(0),
                   _vm._v(" "),
-                  _vm._l(_vm.all_suppliers, function(all_supplier) {
+                  _vm._l(_vm.searched_suppliers, function(all_supplier) {
                     return _c("tr", [
                       _c("td", [_vm._v(_vm._s(all_supplier.name))]),
                       _vm._v(" "),
